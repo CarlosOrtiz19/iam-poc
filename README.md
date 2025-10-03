@@ -1,22 +1,22 @@
 # IAM PoC – Identity and Access Management Proof of Concept
 
-
-This repository contains a Proof of Concept (PoC) for a microservices-based \*\*Identity and Access Management (IAM)\*\* system.  
+This repository contains a Proof of Concept (PoC) for a microservices-based \*\*Identity and Access Management (IAM)\*\* system.
 
 The goal is to demonstrate how to integrate authentication, token lifecycle management, risk evaluation, and security controls (rate limiting, JWT validation, TODO -> observability) into a unified architecture.
 
 ---
+
 ## 📂 Project Structure
 
 iam-poc/
-    │── README.md # Global documentation (this file)
-    │── auth-service/ # Authentication service (login → requests tokens)  
-    │── token-service/ # Security Token Service (STS) → issues \& validates JWTs
-    │── gateway-service/ # API Gateway with JWT filter + Bucket4j rate limiter
-    │── risk-service/ # Fraud/risk scoring service
+│── README.md # Global documentation (this file)
+│── auth-service/ # Authentication service (login → requests tokens)  
+ │── token-service/ # Security Token Service (STS) → issues \& validates JWTs
+│── gateway-service/ # API Gateway with JWT filter + Bucket4j rate limiter
+│── risk-service/ # Fraud/risk scoring service
 
-Each microservice is an independent Spring Boot project with its own \*\*Gradle build\*\*:
----
+## Each microservice is an independent Spring Boot project with its own \*\*Gradle build\*\*:
+
 ## 🧩 Microservices Overview
 
 ### 🔹 Auth-Service
@@ -41,11 +41,11 @@ Each microservice is an independent Spring Boot project with its own \*\*Gradle 
 
 - Features:
 
-    **JWT validation filter** (delegates to Token-Service).
-    
-    **Rate limiting** via Bucket4j.
-    
-    **Risk evaluation** calls to Risk-Service.
+  **JWT validation filter** (delegates to Token-Service).
+
+  **Rate limiting** via Bucket4j.
+
+  **Risk evaluation** calls to Risk-Service.
 
 ### 🔹 Risk-Service
 
@@ -60,11 +60,12 @@ Each microservice is an independent Spring Boot project with its own \*\*Gradle 
 ```mermaid
 flowchart LR
     C[Client] --> G[API Gateway]
-    G -->|JWT Validation + RateLimit| T[Token-Service]
+    G -->|JWT Validation & RateLimit| T[Token-Service]
     G -->|Login| A[Auth-Service]
     G -->|Risk Evaluation| R[Risk-Service]
 
     A --> T
+```
 
 ⚙️ How to Run
 
@@ -90,12 +91,12 @@ Risk-Service → 8083
 
 Login (obtain a JWT):
 curl -X POST "http://localhost:8081/auth/login" \
-     -H "Content-Type: application/json" \
-     -d '{"username": "admin", "password": "password"}'
+ -H "Content-Type: application/json" \
+ -d '{"username": "admin", "password": "password"}'
 
 Call a protected endpoint via Gateway:
 curl -X POST "http://localhost:8080/protected" \
-     -H "Authorization: Bearer <JWT>"
+ -H "Authorization: Bearer <JWT>"
 
 📌 Next Steps
 
@@ -120,12 +121,3 @@ JJWT (Java JWT)
 Bucket4j
 
 ** coming soon ** Kafka (optional, for logging/streaming)
-
-
-
-
-
-
-
-
-
