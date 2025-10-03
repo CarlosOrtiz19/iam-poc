@@ -9,11 +9,11 @@ The goal is to demonstrate how to integrate authentication, token lifecycle mana
 ## 📂 Project Structure
 
 iam-poc/
-│── README.md # Global documentation (this file)
-│── auth-service/ # Authentication service (login → requests tokens)  
- │── token-service/ # Security Token Service (STS) → issues \& validates JWTs
-│── gateway-service/ # API Gateway with JWT filter + Bucket4j rate limiter
-│── risk-service/ # Fraud/risk scoring service
+  ── README.md # Global documentation (this file)
+  ── auth-service/ # Authentication service (login → requests tokens)  
+  ── token-service/ # Security Token Service (STS) → issues \& validates JWTs
+  ── gateway-service/ # API Gateway with JWT filter + Bucket4j rate limiter
+  ── risk-service/ # Fraud/risk scoring service
 
 ## Each microservice is an independent Spring Boot project with its own \*\*Gradle build\*\*:
 
@@ -59,12 +59,12 @@ iam-poc/
 
 ```mermaid
 flowchart LR
-    C[Client] --> G[API Gateway]
-    G -->|JWT Validation & RateLimit| T[Token-Service]
-    G -->|Login| A[Auth-Service]
-    G -->|Risk Evaluation| R[Risk-Service]
+    C[Client] -->|Login| A[Auth-Service]
+    A -->|Requests Token| T[Token-Service]
 
-    A --> T
+    A -->|JWT| G[API Gateway]
+    G -->|JWT Validation & RateLimit| T[Token-Service]
+    G -->|Risk Evaluation| R[Risk-Service]
 ```
 
 ⚙️ How to Run
