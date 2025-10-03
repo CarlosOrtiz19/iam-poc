@@ -1,0 +1,6 @@
+spring:
+  application:
+      name: risk-service
+
+server:
+  port: 8083

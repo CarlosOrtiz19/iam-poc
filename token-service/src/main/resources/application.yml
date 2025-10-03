@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: token-service
+server:
+  port: 8082
+
+jwt:
+  secret: mi-super-clave-dummy-para-jwt-1234567890!!
+  expiration: 600000
